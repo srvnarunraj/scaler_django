@@ -2,8 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from products.models import Product
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from products.serializers import ProductSerializer
+
 # Create your views here.
-def get_all_products(request):
+def getFirst(request):
     data = Product.objects.first()
     print(data.name)
     # Edit the Data Object
@@ -14,3 +18,9 @@ def get_all_products(request):
     data = Product.objects.first()
     print(data.name)
     return HttpResponse(data.name)
+
+@api_view(['GET'])
+def get_products(request):
+    products = Product.objects.all()
+    serialized_products = ProductSerializer(products, many=True)
+    return Response(serialized_products.data)
