@@ -19,3 +19,9 @@ python3 manage.py migrate
 ```bash
 python3 manage.py createsuperuser
 ```
+
+# Django Rest Framework
+```bash
+pip3 install djangorestframework
+python3 manage.py migrate  
+```
