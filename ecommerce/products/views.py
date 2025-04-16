@@ -38,9 +38,16 @@ def get_product_by_id(request, id):
 
 @api_view(['POST'])
 def post_product_by_id(request):
-    product = Product.objects.get(id=request.data.get('id'))
-    product.name = request.data.get('name' )
-    product.price = request.data.get('price')
-    product.save()
-    serialized_product = ProductSerializer(product)
+    # product = Product.objects.get(id=request.data.get('id'))
+    # product.name = request.data.get('name' )
+    # product.price = request.data.get('price')
+    # product.save()
+    # serialized_product = ProductSerializer(product)
+    data = request.data
+    serialized_product = ProductSerializer(data=data)
+    if serialized_product.is_valid():
+        serialized_product.save()
+        return Response(serialized_product.data, status=201)
+    else:
+        return Response(serialized_product.errors, status=400)
     return Response(serialized_product.data)
